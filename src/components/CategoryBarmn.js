@@ -13,8 +13,8 @@ export default class Categorybarmn extends Component
       }
     }
        
-      componentDidMount() {
-        axios.get(this.props.api,{params:{userId:  this.props.message}})
+      apiCall() {
+        axios.get(this.props.api,{params:{userId:  this.props.message, year: this.props.year, month: this.props.month}})
           .then(res => {
         const response = res.data;
         let category=[];
@@ -39,6 +39,19 @@ export default class Categorybarmn extends Component
           }).catch(error => {console.log(error)
             this.setState({ErrorMessage:"Error in retrieving data"})
           }) 
+        }
+        componentDidMount(){
+          this.apiCall();
+        }
+      
+        componentDidUpdate(prevProps, prevState){
+          if(prevProps.month !== this.props.month){
+            this.apiCall();
+          }
+          if(prevProps.year !== this.props.year){
+            this.apiCall();
+          }
+                
         }
  render()
    {

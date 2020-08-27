@@ -128,3 +128,19 @@
       height: 80px;
       padding: 5px;
     }
+    .subsplitright{
+      position:absolute;
+      right: 100px;
+      width: 0%;
+      align-items: flex-end;
+    }
+    .subsplitleft{
+      /* /* left: 0; */
+      /* margin-left: 0px; */
+      width: 1%; 
+      /* align-items: flex-start; */
+      padding-left: 0px;
+      margin-left: 0px;
+      position:absolute;
+      
+    }
