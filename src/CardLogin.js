@@ -47,7 +47,7 @@ export default function CardLogin(props) {
         <CardMedia
           className={classes.media}
           image={props.image}
-          title="Contemplative Reptile"
+          title="TeamWork"
         />
       </CardActionArea>
       {/* <CardActions>
