@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import  { useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -24,6 +24,8 @@ import MuiDialogActions from '@material-ui/core/DialogActions';
 import CloseIcon from '@material-ui/icons/Close';
 // import Typography from '@material-ui/core/Typography';
 import {InlineShareButtons} from 'sharethis-reactjs';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+// import FavoriteIcon from '@material-ui/icons/Favorite';
 
 
 const useStyles = makeStyles({
@@ -102,6 +104,7 @@ export default function AllPostCard(props) {
   const classes = useStyles();
   const cardRef = useRef();
   const [open, setOpen] = React.useState(false);
+  const [liked,setLiked] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -145,18 +148,26 @@ export default function AllPostCard(props) {
         {/* <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton> */}
+        {liked ?(
+          <IconButton className={"MyCustomButton"}style={{marginLeft:"0%",color:"grey",float:"center",align:"center"}}>
+          <FavoriteIcon color="action" fontSize="small"  style={{marginLeft:"0%",color:"red",align:"center"}} 
+          onClick={() => setLiked(false)} />
+         </IconButton>
+        ):(
+          <IconButton className={"MyCustomButton"}style={{marginLeft:"0%",color:"grey",float:"center",align:"center"}}>
+         <FavoriteBorderIcon color="action" fontSize="small"  style={{marginLeft:"0%",color:"grey",align:"center"}} 
+         onClick={() => setLiked(true)} />
+        </IconButton>
+        )}
+         
         <IconButton aria-label="share" >
           <ShareIcon style={{ fontSize: 18 }} onClick={handleClickOpen} />
         </IconButton>
-        <IconButton className={"MyCustomButton"}style={{marginLeft:"0%",color:"grey",float:"left",align:"left"}}>
+        {/* <IconButton className={"MyCustomButton"}style={{marginLeft:"0%",color:"grey",float:"left",align:"left"}}>
         <FileCopyIcon color="action" fontSize="small" style={{marginLeft:"0%",color:"grey",align:"left"}}
                       onClick={copyPost} />
-        </IconButton>
-        <IconButton className={"MyCustomButton"}style={{marginLeft:"0%",color:"grey",float:"center",align:"center"}}>
-        <GetAppIcon color="action" fontSize="medium"  style={{marginLeft:"0%",color:"grey",align:"center"}}
-                    onClick={() => exportComponentAsJPEG(cardRef)}
-                    />
-        </IconButton>
+        </IconButton> */}
+       
       </CardActions>
       </CardActionArea>
       
@@ -166,6 +177,7 @@ export default function AllPostCard(props) {
           Share
         </DialogTitle>
         <DialogContent dividers>
+          
         <InlineShareButtons
         config={{
         alignment: 'center',  // alignment of buttons (left, center, right)

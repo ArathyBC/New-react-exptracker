@@ -7,15 +7,21 @@ import Grid from '@material-ui/core/Grid';
 // import CardLogin from './CardLogin';
 import AllPostCard from './AllPostCard';
 import './LoginGrid.css';
-import img1 from './Images/img1.jpg';
-import img2 from './Images/img2.jpg';
-import img3 from './Images/img3.jpg';
-import img4 from './Images/img4.jpg';
-import img5 from './Images/img5.jpg';
+import img1 from './Image/img1.jpg';
+import img2 from './Image/img2.jpg';
+import img3 from './Image/img3.jpg';
+import img4 from './Image/img4.jpg';
+import img5 from './Image/img5.jpg';
+import img6 from './Image/img6.jpg';
 import * as API from './Api';
-import axios from '../node_modules/axios';
+import axios from 'axios';
+import Link from '@material-ui/core/Link';
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import {browserHistory} from 'react-router';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Spinner1 from './Spinner1';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -23,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 0,
     width:'40%',
     marginLeft: '30%',
-    backgroundColor: '#6c0080',
+    backgroundColor: '#5233b0',
     overflowY:'scroll',
     overflowX: 'hidden',
     height:'100%'
@@ -32,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   
 
   gridContiner: {
-    maxheight: '100vh',
+    height: '100vh',
     padding: '20%',
     paddingTop: '10%'
   },
@@ -74,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
 //   return [ref, visible];
 // }
 
-function LoginGrid() {
+function AllPostScroll() {
 const classes = useStyles();
 const [imageList,setImageList] = useState([img1,img2,img3,img4,img5])
 // const [ref, visible] = useOnScreen({threshold: 0.6});
@@ -96,6 +102,7 @@ useEffect(() => {
   console.log(cardData)
 
   const addPost = () =>{
+    browserHistory.push("/Home/");
     
   }
   
@@ -103,29 +110,41 @@ useEffect(() => {
 
   return (
     <div className={classes.body}>
-    <div id = 'srollable' className={classes.root} >
-      <Grid container justify='center' spacing={5} className={classes.gridContiner} direction='coloumn'>
-      
-       {cardData.map((cardData)=>(
-        <Grid  item xs={12} className={classes.gridItem} >
-        <AllPostCard  image={cardData.IMAGE_ID} caption={cardData.CAPTION} shareId={cardData.SHARE_ID} 
-                      sender={cardData.SENDER} note={cardData.NOTE} />
-        </Grid>
-       ))}
-    
-        {/* <Grid item xs={12} className={classes.gridItem} >
-        <CardLogin no='2' image='https://cdn.theatlantic.com/thumbor/ApjKEB47YbmSsDJRLpnEMRNBN94=/0x1500:4656x4121/720x405/media/img/mt/2020/05/LON72718/original.jpg' />
-        </Grid>
-        <Grid item xs={12} className={classes.gridItem}>
-        <CardLogin no='2' image='https://cdn.theatlantic.com/thumbor/ApjKEB47YbmSsDJRLpnEMRNBN94=/0x1500:4656x4121/720x405/media/img/mt/2020/05/LON72718/original.jpg' />
-        </Grid> */}
-      </Grid>
-    </div>
-    <Button variant='contained' style={{position:'absolute', right:0, bottom:0, padding:0,backgroundColor:'#6c0080', marginRight:15, marginBottom:15 }} 
-            onClick={addPost}>
-    <AddIcon style={{backgroundColor:'#6c0080',  color:'white', padding:10 }} />
+      <Button variant='contained' style={{position:'absolute', right:0, top:0, padding:0,
+    backgroundColor:'#1b0f3b',color:'white',fontSize:'12px',fontWeight:'light' ,marginRight:15, marginTop:15, 
+    padding:[10,8,8,10], borderRadius:0 }} 
+    startIcon={<ExitToAppIcon />}
+    onClick={() => browserHistory.push('/Login')} >
+    Log out
     </Button>
+      {/* <Link  component="button" variant="body2" style={{position:'absolute', fontSize:'16px', fontWeight:500 ,right:45, top:20}} 
+      onClick={() => browserHistory.push('/Login')} >
+           Logout
+      </Link>
+      <ExitToAppIcon style={{position:'absolute', right:15, top:20, color:'#5233b0' }} /> */}
+    <div id = 'srollable' className={classes.root} >
+      {cardData.length ?(<Grid container justify='center' spacing={5} className={classes.gridContiner} direction='coloumn'>
+      
+      {cardData.map((cardData)=>(
+       <Grid  item xs={12} className={classes.gridItem} >
+       <AllPostCard  image={cardData.IMAGE_ID} caption={cardData.CAPTION} shareId={cardData.SHARE_ID} 
+                     sender={cardData.SENDER} note={cardData.NOTE} />
+       </Grid>
+      ))}
+   
+       
+     </Grid>)
+      
+      :(<Spinner1 />)}
+      
+    </div>
+    
+    <IconButton variant='contained' style={{position:'absolute', right:15, bottom:25, padding:0,backgroundColor:'#5233b0', borderRadius:0, padding:10 }} 
+            onClick={addPost}>
+    <AddIcon style={{backgroundColor:'#5233b0',  color:'white', padding:0 }} />
+    </IconButton>
+    
     </div>
   );
 }
-export default LoginGrid;
+export default AllPostScroll;
